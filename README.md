@@ -100,3 +100,13 @@ go run ./cmd/webview ./example/hello.html
 ```shell
 ./cmd/wails/build/bin/wails ./example/hello.html 
 ```
+
+* wails dev
+
+```shell
+go run ./cmd/goja ./example/wails/src/ 
+```
+
+```shell
+./cmd/wails2/dev ./example/wails
+```

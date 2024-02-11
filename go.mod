@@ -3,11 +3,14 @@ module github.com/cryptopunkscc/go-astral-js
 go 1.21
 
 require (
+	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/cryptopunkscc/astrald v0.0.0-20240202171346-3b6b1a766a67
 	github.com/dop251/goja v0.0.0-20230427124612-428fc442ff5f
 	github.com/google/uuid v1.3.1
 	github.com/wailsapp/wails/v2 v2.6.0
 	github.com/webview/webview v0.0.0-20230415172654-8387ff8945fc
+	golang.org/x/mod v0.12.0
+	golang.org/x/sys v0.16.0
 	rogchap.com/v8go v0.9.0
 )
 
@@ -37,10 +40,11 @@ require (
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/wailsapp/go-webview2 v1.0.10 // indirect
 	github.com/wailsapp/mimetype v1.4.1 // indirect
+	github.com/wzshiming/ctc v1.2.3 // indirect
+	github.com/wzshiming/winseq v0.0.0-20200112104235-db357dc107ae // indirect
 	golang.org/x/crypto v0.18.0 // indirect
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
 	golang.org/x/net v0.20.0 // indirect
-	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 )
 
