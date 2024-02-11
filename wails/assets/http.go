@@ -1,4 +1,4 @@
-package wails
+package assets
 
 import (
 	"fmt"

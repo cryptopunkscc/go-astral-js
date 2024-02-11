@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	astraljs "github.com/cryptopunkscc/go-astral-js"
-	"github.com/cryptopunkscc/go-astral-js/wails"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"log"
 	"os"
@@ -16,8 +15,6 @@ func main() {
 	}
 
 	path := os.Args[1]
-	log.Println("path: ", path)
-
 	opt := options.App{
 		Width:            1024,
 		Height:           768,
@@ -27,7 +24,7 @@ func main() {
 		},
 	}
 
-	if err := wails.Run(path, &opt); err != nil {
+	if err := run(path, &opt); err != nil {
 		log.Fatalln(err)
 	}
 }

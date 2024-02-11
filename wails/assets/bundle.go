@@ -1,4 +1,4 @@
-package wails
+package assets
 
 import (
 	"errors"
@@ -8,13 +8,7 @@ import (
 	"strings"
 )
 
-const (
-	TypeDir  = "fs/dir"
-	TypeHtml = "text/html"
-	TypeZip  = "application/zip"
-)
-
-func bundleType(path string) (filetype string, err error) {
+func BundleType(path string) (filetype string, err error) {
 	info, err := os.Stat(path)
 	if err != nil {
 		return

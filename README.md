@@ -33,7 +33,7 @@ To run the frontend, you must have the [Astral Daemon](https://github.com/crypto
 Make sure all required dependencies are installed.
 
 * [WebView](https://github.com/webview/webview#prerequisites)
-* [wails](https://wails.io/docs/gettingstarted/installation)
+* [Wails](https://wails.io/docs/gettingstarted/installation)
 
 ## Install
 
@@ -48,7 +48,7 @@ go build -o "$HOME/.local/bin/astral-runtime-goja" ./cmd/goja
 ```
 
 ```shell
-./cmd/wails/build.sh
+./cmd/wails/app_wails_build.sh
 ```
 
 Update anc
@@ -64,6 +64,38 @@ cp ./mod_apphost.yaml "$HOME/.config/astrald/config/"
 ```
 
 ## How to run
+
+### Wails
+
+* run example service
+
+```shell
+go run ./cmd/goja ./example/wails/src/service.js
+```
+
+* run example app
+
+```shell
+./cmd/wails2/app_run.sh ./example/wails/dist
+```
+
+* run example development server
+
+```shell
+./cmd/wails2/dev_run.sh ./example/wails
+```
+
+* build app executable
+
+```shell
+./cmd/wails2/app_build.sh
+```
+
+* build development executable
+
+```shell
+./cmd/wails2/dev_build.sh
+```
 
 ### AppHost
 
@@ -99,14 +131,4 @@ go run ./cmd/webview ./example/hello.html
 
 ```shell
 ./cmd/wails/build/bin/wails ./example/hello.html 
-```
-
-* wails dev
-
-```shell
-go run ./cmd/goja ./example/wails/src/ 
-```
-
-```shell
-./cmd/wails2/dev ./example/wails
 ```
