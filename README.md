@@ -82,7 +82,7 @@ go run ./cmd/goja ./example/wails/src/service.js
 * run example development server
 
 ```shell
-./cmd/wails2/dev_run.sh ./example/wails
+./cmd/wails2/dev_run.sh dev ./example/wails
 ```
 
 * build app executable
