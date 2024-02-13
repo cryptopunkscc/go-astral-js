@@ -73,4 +73,4 @@ require (
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )
 
-replace github.com/cryptopunkscc/astrald => ../astrald
+//replace github.com/cryptopunkscc/astrald => ../astrald
