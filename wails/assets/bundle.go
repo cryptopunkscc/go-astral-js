@@ -22,6 +22,7 @@ func BundleType(path string) (filetype string, err error) {
 		if filetype, err = fileType(path); err == nil {
 			switch filetype {
 			case TypeHtml:
+			case TypeJs:
 			case TypeZip:
 			default:
 				err = errors.New("unsupported file type: " + filetype)

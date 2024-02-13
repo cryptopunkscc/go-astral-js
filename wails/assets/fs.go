@@ -13,6 +13,8 @@ func BundleFS(bundleType string, path string) (f fs.FS, err error) {
 		f = os.DirFS(path)
 	case TypeHtml:
 		f, err = singleFileFs(path, "index.html")
+	case TypeJs:
+		f, err = singleFileFs(path, "service.js")
 	case TypeZip:
 		f, err = zip.OpenReader(path)
 	}

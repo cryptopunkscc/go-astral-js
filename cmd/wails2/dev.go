@@ -3,6 +3,7 @@
 package main
 
 import (
+	"github.com/cryptopunkscc/go-astral-js/goja"
 	"github.com/cryptopunkscc/go-astral-js/wails/build"
 	"github.com/cryptopunkscc/go-astral-js/wails/bundle"
 	"github.com/cryptopunkscc/go-astral-js/wails/create"
@@ -11,6 +12,8 @@ import (
 	"github.com/leaanthony/clir"
 	"github.com/pterm/pterm"
 	"log"
+	"path"
+	"sync"
 )
 
 func main() {
@@ -25,10 +28,23 @@ func main() {
 	}
 }
 
-type FlagsDev struct{ FlagsPath }
+type FlagsDev struct{ FlagsApp }
 
-func cliDevelopment(f *FlagsDev) error {
-	return dev.Run(f.Path, AppOptions())
+func cliDevelopment(f *FlagsDev) (err error) {
+	f.Setup()
+	wait := sync.WaitGroup{}
+	if f.Back {
+		wait.Add(1)
+		if err = goja.Run(path.Join(f.Path, "src")); err != nil {
+			return
+		}
+	}
+	if f.Front {
+		wait.Add(1)
+		return dev.Run(f.Path, AppOptions())
+	}
+	wait.Wait()
+	return
 }
 
 type FlagsBuild struct{ FlagsPath }
@@ -40,7 +56,7 @@ func cliBuild(f *FlagsBuild) error {
 type FlagsBundle struct{ FlagsBuild }
 
 func cliBundle(f *FlagsBundle) error {
-	return bundle.Create(f.Path)
+	return bundle.Run(f.Path)
 }
 
 type FlagsInit struct {

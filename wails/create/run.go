@@ -2,6 +2,7 @@ package create
 
 import (
 	"github.com/cryptopunkscc/go-astral-js/wails/build"
+	"github.com/cryptopunkscc/go-astral-js/wails/bundle"
 	"github.com/cryptopunkscc/go-astral-js/wails/create/templates"
 	"github.com/flytam/filenamify"
 	"log"
@@ -52,6 +53,11 @@ func Run(
 
 	// build project
 	if err = build.Run(targetDir); err != nil {
+		return
+	}
+
+	// bundle project
+	if err = bundle.Run(targetDir); err != nil {
 		return
 	}
 

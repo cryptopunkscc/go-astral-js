@@ -2,8 +2,10 @@ package main
 
 import (
 	astraljs "github.com/cryptopunkscc/go-astral-js"
+	"github.com/cryptopunkscc/go-astral-js/goja"
 	"github.com/cryptopunkscc/go-astral-js/wails/app"
 	"github.com/wailsapp/wails/v2/pkg/options"
+	"sync"
 )
 
 func AppOptions() *options.App {
@@ -23,8 +25,32 @@ type FlagsPath struct {
 	Path string `pos:"1" default:"."`
 }
 
-type FlagsApp struct{ FlagsPath }
+type FlagsApp struct {
+	FlagsPath
+	Front bool `name:"f"`
+	Back  bool `name:"b"`
+}
 
-func cliApplication(f *FlagsApp) error {
-	return app.Run(f.Path, AppOptions())
+func (f *FlagsApp) Setup() {
+	if !f.Front && !f.Back {
+		f.Front = true
+		f.Back = true
+	}
+}
+
+func cliApplication(f *FlagsApp) (err error) {
+	f.Setup()
+	wait := sync.WaitGroup{}
+	if f.Back {
+		wait.Add(1)
+		if err = goja.Run(f.Path); err != nil {
+			return
+		}
+	}
+	if f.Front {
+		wait.Add(1)
+		return app.Run(f.Path, AppOptions())
+	}
+	wait.Wait()
+	return
 }

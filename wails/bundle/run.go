@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-func Create(dir string) (err error) {
+func Run(dir string) (err error) {
 	// build dist if needed
 	if _, err = fs.Stat(os.DirFS(dir), "dist"); os.IsNotExist(err) {
 		if err = build.Run(dir); err != nil {
