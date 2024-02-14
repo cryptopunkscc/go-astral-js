@@ -7,6 +7,7 @@ require (
 	github.com/cryptopunkscc/astrald v0.0.0-20240202171346-3b6b1a766a67
 	github.com/dop251/goja v0.0.0-20230427124612-428fc442ff5f
 	github.com/flytam/filenamify v1.0.0
+	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-git/go-git/v5 v5.3.0
 	github.com/google/uuid v1.3.1
 	github.com/leaanthony/clir v1.6.0

@@ -29,8 +29,6 @@ const (
 )
 
 type FlatAdapter struct {
-	closed bool
-
 	listeners      map[string]*astral.Listener
 	listenersMutex sync.RWMutex
 
@@ -45,29 +43,26 @@ func NewFlatAdapter() *FlatAdapter {
 	}
 }
 
-func CloseFlatAdapter(api *FlatAdapter) {
+func (api *FlatAdapter) Interrupt() {
 	api.listenersMutex.Lock()
 	api.connectionsMutex.Lock()
 	defer api.listenersMutex.Unlock()
 	defer api.connectionsMutex.Unlock()
-	for _, closer := range api.listeners {
+	for name, closer := range api.listeners {
+		log.Println("[Interrupt] closing listener:", name)
 		_ = closer.Close()
 	}
-	for _, closer := range api.connections {
+	for name, closer := range api.connections {
+		log.Print("[Interrupt] closing connection:", name)
 		_ = closer.Close()
 	}
-	api.connections = nil
-	api.listeners = nil
-	api.closed = true
-	log.Println("[AppHostFlatAdapter] closed")
+	api.connections = map[string]io.ReadWriteCloser{}
+	api.listeners = map[string]*astral.Listener{}
 }
 
 func (api *FlatAdapter) getListener(service string) (l *astral.Listener, ok bool) {
 	api.listenersMutex.RLock()
 	defer api.listenersMutex.RUnlock()
-	if api.closed {
-		return
-	}
 	l, ok = api.listeners[service]
 	return
 }
@@ -75,9 +70,6 @@ func (api *FlatAdapter) getListener(service string) (l *astral.Listener, ok bool
 func (api *FlatAdapter) setListener(service string, listener *astral.Listener) {
 	api.listenersMutex.Lock()
 	defer api.listenersMutex.Unlock()
-	if api.closed {
-		return
-	}
 	if listener != nil {
 		api.listeners[service] = listener
 	} else {
@@ -88,9 +80,6 @@ func (api *FlatAdapter) setListener(service string, listener *astral.Listener) {
 func (api *FlatAdapter) getConnection(connectionId string) (rw io.ReadWriteCloser, ok bool) {
 	api.connectionsMutex.RLock()
 	defer api.connectionsMutex.RUnlock()
-	if api.closed {
-		return
-	}
 	rw, ok = api.connections[connectionId]
 	return
 }
@@ -98,9 +87,6 @@ func (api *FlatAdapter) getConnection(connectionId string) (rw io.ReadWriteClose
 func (api *FlatAdapter) setConnection(connectionId string, connection io.ReadWriteCloser) {
 	api.connectionsMutex.Lock()
 	defer api.connectionsMutex.Unlock()
-	if api.closed {
-		return
-	}
 	if connection != nil {
 		api.connections[connectionId] = connection
 	} else {

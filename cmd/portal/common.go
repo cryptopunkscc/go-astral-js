@@ -43,7 +43,7 @@ func cliApplication(f *FlagsApp) (err error) {
 	wait := sync.WaitGroup{}
 	if f.Back {
 		wait.Add(1)
-		if err = goja.Run(f.Path); err != nil {
+		if err = goja.NewBackend().Run(f.Path); err != nil {
 			return
 		}
 	}

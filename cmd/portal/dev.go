@@ -3,6 +3,7 @@
 package main
 
 import (
+	"github.com/cryptopunkscc/go-astral-js/pkg/backend"
 	"github.com/cryptopunkscc/go-astral-js/pkg/backend/goja"
 	"github.com/cryptopunkscc/go-astral-js/pkg/build"
 	"github.com/cryptopunkscc/go-astral-js/pkg/bundle"
@@ -35,7 +36,7 @@ func cliDevelopment(f *FlagsDev) (err error) {
 	wait := sync.WaitGroup{}
 	if f.Back {
 		wait.Add(1)
-		if err = goja.Run(path.Join(f.Path, "src")); err != nil {
+		if err = backend.Dev(goja.NewBackend(), path.Join(f.Path, "src")); err != nil {
 			return
 		}
 	}

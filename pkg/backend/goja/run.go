@@ -8,7 +8,18 @@ import (
 	"log"
 )
 
-func Run(path string) (err error) {
+type Backend struct {
+	vm      *goja.Runtime
+	appHost *astraljs.FlatAdapter
+}
+
+func NewBackend() *Backend {
+	return &Backend{
+		appHost: astraljs.NewFlatAdapter(),
+	}
+}
+
+func (b *Backend) Run(path string) (err error) {
 	// identify app bundle type
 	bundleType, err := assets.BundleType(path)
 	if err != nil {
@@ -25,27 +36,30 @@ func Run(path string) (err error) {
 		return err
 	}
 
-	RunSource(string(bytes))
+	b.RunSource(string(bytes))
 	return
 }
 
-func RunSource(app string) {
+func (b *Backend) RunSource(app string) {
+	if b.vm != nil {
+		b.vm.ClearInterrupt()
+		b.appHost.Interrupt()
+	}
+	b.vm = goja.New()
 
-	vm := goja.New()
-
-	err := Bind(vm, astraljs.NewFlatAdapter())
+	err := Bind(b.vm, b.appHost)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// inject apphost client js lib
-	_, err = vm.RunString(astraljs.JsBaseString())
+	_, err = b.vm.RunString(astraljs.JsBaseString())
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// start js application backend
-	_, err = vm.RunString(app)
+	_, err = b.vm.RunString(app)
 	if err != nil {
 		log.Fatal(err)
 	}
