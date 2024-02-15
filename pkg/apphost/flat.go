@@ -14,18 +14,18 @@ import (
 )
 
 const (
-	Log             = "log"
-	Sleep           = "sleep"
-	ServiceRegister = "astral_service_register"
-	ServiceClose    = "astral_service_close"
-	ConnAccept      = "astral_conn_accept"
-	ConnClose       = "astral_conn_close"
-	ConnWrite       = "astral_conn_write"
-	ConnRead        = "astral_conn_read"
-	Query           = "astral_query"
-	QueryName       = "astral_query_name"
-	GetNodeInfo     = "astral_node_info"
-	Resolve         = "astral_resolve"
+	Log             = "_log"
+	Sleep           = "_sleep"
+	ServiceRegister = "_astral_service_register"
+	ServiceClose    = "_astral_service_close"
+	ConnAccept      = "_astral_conn_accept"
+	ConnClose       = "_astral_conn_close"
+	ConnWrite       = "_astral_conn_write"
+	ConnRead        = "_astral_conn_read"
+	Query           = "_astral_query"
+	QueryName       = "_astral_query_name"
+	GetNodeInfo     = "_astral_node_info"
+	Resolve         = "_astral_resolve"
 )
 
 type FlatAdapter struct {

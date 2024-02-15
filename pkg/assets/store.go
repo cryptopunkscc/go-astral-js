@@ -17,7 +17,7 @@ func BundleStore(bundleType string, path string) (s Store, err error) {
 	case TypeDir:
 		s = NewDirStore(path)
 	case TypeHtml:
-		s, err = singleFileStore(path, "index.html")
+		s, err = SingleFileStore(path, "index.html")
 	case TypeZip:
 		s, err = NewZipStore(path)
 	}
@@ -53,7 +53,7 @@ func (o *OverlayStore) Open(s string) (io.ReadCloser, error) {
 	return nil, errors.New("not found")
 }
 
-func singleFileStore(path string, name string) (s Store, err error) {
+func SingleFileStore(path string, name string) (s Store, err error) {
 	file, err := os.ReadFile(path)
 	if err != nil {
 		return

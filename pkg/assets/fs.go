@@ -13,9 +13,9 @@ func BundleFS(bundleType string, path string) (f fs.FS, err error) {
 	case TypeDir:
 		f = os.DirFS(path)
 	case TypeHtml:
-		f, err = singleFileFs(path, "index.html")
+		f, err = SingleFileFs(path, "index.html")
 	case TypeJs:
-		f, err = singleFileFs(path, "service.js")
+		f, err = SingleFileFs(path, "service.js")
 	case TypeZip:
 		f, err = zip.OpenReader(path)
 	}
@@ -25,7 +25,7 @@ func BundleFS(bundleType string, path string) (f fs.FS, err error) {
 	return
 }
 
-func singleFileFs(path string, name string) (f fs.FS, err error) {
+func SingleFileFs(path string, name string) (f fs.FS, err error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return
